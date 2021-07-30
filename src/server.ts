@@ -57,11 +57,16 @@ import { generateJWT, requireAuth } from './controllers/auth'
     res.send("try GET /filteredimage?image_url={{}}")
   } );
 
+  //***************************************************** */
   // route to generate JWT
   app.get("/auth", async( req, res) => {
+    
+    // helloworld is a random hardcoded value, because we do not have a user.
     const jwt = generateJWT("helloworld");
+
     res.status(200).send({auth: true, token: jwt})
   })
+//***************************************************** */
 
   // Start the Server
   app.listen( port, () => {
