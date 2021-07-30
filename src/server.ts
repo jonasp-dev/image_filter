@@ -36,7 +36,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
       res.status(400).send('route requires image url in query')
     }
 
-    let filteredPath = await filterImageFromURL(image_url)
+    let filteredPath : string = await filterImageFromURL(image_url)
     
     if ( !filteredPath ) {
       res.status(404).send('could not find image from url')
