@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
+import { generateJWT, requireAuth } from './controllers/auth'
 
 (async () => {
 
@@ -29,7 +30,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
   /**************************************************************************** */
 
-  app.get("/filteredimage", async (req, res) => {
+  app.get("/filteredimage", requireAuth, async (req, res) => {
     let  { image_url } = req.query;
 
     if( !image_url ) {
@@ -55,7 +56,12 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   app.get( "/", async ( req, res ) => {
     res.send("try GET /filteredimage?image_url={{}}")
   } );
-  
+
+  // route to generate JWT
+  app.get("/auth", async( req, res) => {
+    const jwt = generateJWT("helloworld");
+    res.status(200).send({auth: true, token: jwt})
+  })
 
   // Start the Server
   app.listen( port, () => {
