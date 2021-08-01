@@ -1,4 +1,5 @@
 import express from 'express';
+import {Request, Response} from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
 import { generateJWT, requireAuth } from './controllers/auth'
@@ -30,7 +31,7 @@ import { generateJWT, requireAuth } from './controllers/auth'
 
   /**************************************************************************** */
 
-  app.get("/filteredimage", requireAuth, async (req, res) => {
+  app.get("/filteredimage", requireAuth, async (req: Request, res: Response ) => {
     let  { image_url } = req.query;
 
     if( !image_url ) {
@@ -53,16 +54,16 @@ import { generateJWT, requireAuth } from './controllers/auth'
   
   // Root Endpoint
   // Displays a simple message to the user
-  app.get( "/", async ( req, res ) => {
+  app.get( "/", async ( req: Request, res: Response ) => {
     res.send("try GET /filteredimage?image_url={{}}")
   } );
 
   //***************************************************** */
   // route to generate JWT
-  app.get("/auth", async( req, res) => {
+  app.get("/auth", async( req: Request, res: Response) => {
     
     // helloworld is a random hardcoded value, because we do not have a user.
-    const jwt = generateJWT("helloworld");
+    const jwt : string = generateJWT("helloworld");
 
     res.status(200).send({auth: true, token: jwt})
   })
